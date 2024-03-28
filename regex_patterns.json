@@ -1,0 +1,7 @@
+{
+    "patterns": [
+      {"pattern":"\\d{3}-\\d{3}-\\d{4}", "replacement":"111-111-1111"},
+      {"pattern":"\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b", "replacement":"abc@example.com"}
+    ]
+  }
+  
