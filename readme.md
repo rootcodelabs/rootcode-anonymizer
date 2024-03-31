@@ -1,4 +1,3 @@
-```markdown
 # Welcome to the Rootcode Anonymization Pipeline
 
 ## How to Install
@@ -97,4 +96,3 @@ If there are certain words that Anonymizer should not anonymize, you can manage 
 
 **Important Points:**
 - When anonymization is happening on the Anonymizer tab, do not change tabs to Regex or Immutable Words, as this will cause you to lose results of the anonymization.
-```
