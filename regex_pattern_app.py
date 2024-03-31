@@ -1,15 +1,27 @@
 import streamlit as st
 import json
+import os
 
-# Load the regex patterns from the JSON file
-@st.cache(allow_output_mutation=True)
 def load_patterns():
-    with open('regex_patterns.json', 'r') as f:
-        data = json.load(f)
-        return data['patterns']
+    file_path = 'regex_patterns.json'
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            default_data = {"patterns": []}
+            json.dump(default_data, f)
+            return default_data['patterns']
+
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            return data['patterns']
+    except json.decoder.JSONDecodeError:
+        print("Invalid JSON format in file. Resetting to default.")
+        with open(file_path, 'w') as f:
+            default_data = {"patterns": []}
+            json.dump(default_data, f)
+            return default_data['patterns']
 
 def save_patterns_to_file(patterns):
-    # Save the modified patterns back to the JSON file
     with open('regex_patterns.json', 'w') as f:
         json.dump({'patterns': patterns}, f, indent=4)
 
@@ -31,7 +43,6 @@ def update_pattern(index, pattern, replacement):
 def main():
     st.title('Regex Patterns Editor')
 
-    # Display existing patterns and provide options to modify, delete, or update them
     patterns = load_patterns()
     for i, pattern_data in enumerate(patterns):
         st.subheader(f'Pattern {i+1}')
@@ -43,7 +54,7 @@ def main():
             if st.button('Delete', key=f'delete_{i}'):
                 delete_pattern(i)
                 st.info(f'Pattern {i+1} deleted.')
-                st.rerun()  # Rerun the app to update the UI
+                st.rerun()
         with col2:
             if st.button('Update', key=f'update_{i}'):
                 update_pattern(i, pattern, replacement)
@@ -59,6 +70,9 @@ def main():
     if st.button('Add Pattern'):
         add_pattern(new_pattern, new_replacement)
         st.success('New pattern added.')
+        # Clear the input fields for adding a new pattern
+        st.text_input('Pattern:', key='new_pattern')
+        st.text_input('Replacement:', key='new_replacement')
         st.rerun()  # Rerun the app to update the UI
 
 if __name__ == '__main__':
