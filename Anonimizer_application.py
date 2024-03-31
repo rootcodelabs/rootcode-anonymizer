@@ -8,10 +8,10 @@ sidebar_enabled = True
 def main():
 
     st.sidebar.title('Navigation')
-    selection = st.sidebar.radio("Go to", ['Anonimizer', 'Regex', 'Immutable Words'])
+    selection = st.sidebar.radio("Go to", ['Anonymizer', 'Regex', 'Immutable Words'])
 
-    if selection == 'Anonimizer':
-        with st.spinner('Loading Anonimizer...'):
+    if selection == 'Anonymizer':
+        with st.spinner('Loading Anonymizer...'):
             anonymizer_app.main()
 
     elif selection == 'Regex':
