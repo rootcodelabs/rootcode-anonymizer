@@ -75,24 +75,25 @@ After loading, you will be presented with the main screen, where you'll find thr
 ### Anonymizer
 
 This component allows you to anonymize text. Simply click on "Browse files" to select a .csv file, or drag and drop a csv file onto the interface. 
-
-![Upload Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+![Upload Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/2ee6bdb9-1235-4ff1-879f-3e884d76ebcf)
 
 Once the file is provided, Anonymizer will start processing it like this:
-
-![Processing Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+![Processing Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/076883ad-90e9-4434-aef2-8cab564fdd84)
 
 This might take a lot of time depending on the csv file provided and system requirements. After processing, the system will allow you to download the anonymized file:
 
-![Done Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+![Done Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/34c7a4dc-2606-4880-86d4-4e1ca5693a18)
 
 ### Regex Management
 
 Anonymizer can detect given regex patterns and replace them with a specified replacement string. Here you can view, update, and delete existing regex patterns and replacements, as well as add completely new ones.
+![regex_management](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/64af1b36-45ca-4628-874c-c9a01e22a974)
 
 ### Immutable Words Management
 
 If there are certain words that Anonymizer should not anonymize, you can manage those words here. You can view, update, and delete existing words, as well as add new ones.
+
+![Immutable_word_management](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/e958313b-0191-4cdc-83a7-563277f84ddb)
 
 **Important Points:**
 - When anonymization is happening on the Anonymizer tab, do not change tabs to Regex or Immutable Words, as this will cause you to lose results of the anonymization.
