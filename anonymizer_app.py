@@ -4,6 +4,12 @@ import csv
 from process_controller import NERProcessorController
 import codecs
 
+
+class SessionState:
+    def __init__(self, **kwargs):
+        for key, val in kwargs.items():
+            setattr(self, key, val)
+
 def preprocess_bytes(content):
     try:
         decoded_content = content.decode('windows-1252').splitlines()
@@ -15,9 +21,17 @@ def preprocess_bytes(content):
 def main():
     st.title('Rootcode Anonymizer')
 
+    # Retrieve the current session state
+    session_state = SessionState()
+
+    # If this is a new session, set sidebar_enabled to True
+    if not hasattr(session_state, 'sidebar_enabled'):
+        session_state.sidebar_enabled = True
+
     uploaded_file = st.file_uploader("Upload CSV file", type=['csv'])
 
     if uploaded_file is not None:
+        session_state.sidebar_enabled = False
         st.write("Uploaded file details:")
         st.write(uploaded_file.name)
         st.write("Preprocessing CSV file...")
@@ -33,6 +47,7 @@ def main():
         modified_rows = process_controller.process_sentence_list(rows)
 
         st.success("CSV file preprocessed and processed successfully!")
+        session_state.sidebar_enabled = True
 
         df = pd.DataFrame(modified_rows)
 
@@ -44,7 +59,6 @@ def main():
             file_name='processed_data.csv',
             mime='text/csv'
         )
-        return
 
 if __name__ == "__main__":
     main()
