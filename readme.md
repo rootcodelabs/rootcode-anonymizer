@@ -1,3 +1,4 @@
+```markdown
 # Welcome to the Rootcode Anonymization Pipeline
 
 ## How to Install
@@ -60,6 +61,40 @@
 
 This pipeline provides an effective solution for anonymizing data. Enjoy anonymizing your data seamlessly!
 
-## How to Use
-Sometimes when you access http://localhost:8501 you might see this kind of screen. This happens when application is loading. Depending on the system resources, It might take sometime. 
-![image](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+## Usage
+
+Sometimes when you access [http://localhost:8501](http://localhost:8501), you might encounter a loading screen, as shown below:
+
+![Loading Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+
+After loading, you will be presented with the main screen, where you'll find three options in the sidebar:
+
+- **Anonymizer**
+- **Regex**
+- **Immutable Words**
+
+### Anonymizer
+
+This component allows you to anonymize text. Simply click on "Browse files" to select a .csv file, or drag and drop a csv file onto the interface. 
+
+![Upload Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+
+Once the file is provided, Anonymizer will start processing it like this:
+
+![Processing Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+
+This might take a lot of time depending on the csv file provided and system requirements. After processing, the system will allow you to download the anonymized file:
+
+![Done Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
+
+### Regex Management
+
+Anonymizer can detect given regex patterns and replace them with a specified replacement string. Here you can view, update, and delete existing regex patterns and replacements, as well as add completely new ones.
+
+### Immutable Words Management
+
+If there are certain words that Anonymizer should not anonymize, you can manage those words here. You can view, update, and delete existing words, as well as add new ones.
+
+**Important Points:**
+- When anonymization is happening on the Anonymizer tab, do not change tabs to Regex or Immutable Words, as this will cause you to lose results of the anonymization.
+```
