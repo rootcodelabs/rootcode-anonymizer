@@ -61,3 +61,5 @@
 This pipeline provides an effective solution for anonymizing data. Enjoy anonymizing your data seamlessly!
 
 ## How to Use
+Sometimes when you access http://localhost:8501 you might see this kind of screen. This happens when application is loading. Depending on the system resources, It might take sometime. 
+![image](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
