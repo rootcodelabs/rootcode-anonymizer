@@ -7,17 +7,18 @@ import os
 import tempfile
 from datetime import datetime
 from process_controller import NERProcessorController
-# import codecs
+import codecs
 
 app = FastAPI()
 process_controller = NERProcessorController()
 
 def preprocess_bytes(content):
     try:
-        decoded_content = content.decode('utf-8').splitlines()
+        decoded_content = content.decode('windows-1252').splitlines()
         return decoded_content
     except UnicodeDecodeError:
-        return content.decode('utf-8', 'replace').splitlines()
+        print("Unicode replacement")
+        return codecs.decode(content, 'windows-1252', 'ignore').splitlines()
 
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
@@ -32,7 +33,7 @@ async def upload_file(file: UploadFile = File(...)):
     rows = [row for row in reader]
     modified_rows = process_controller.process_sentence_list(rows)
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.csv', newline='', mode='w', encoding='utf-16') as tmp_file:
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.csv', newline='', mode='w', encoding='windows-1252') as tmp_file:
         writer = csv.writer(tmp_file)
         writer.writerows(modified_rows)
 
