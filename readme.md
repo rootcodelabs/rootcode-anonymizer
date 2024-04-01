@@ -63,6 +63,8 @@ This pipeline provides an effective solution for anonymizing data. Enjoy anonymi
 
 ## Usage
 
+Please [Click Here]([URL](https://drive.google.com/file/d/1bmcwFNvdijVV8VdOn3mKtIYt99_29-nc/view?usp=sharing)) to view anonymizer demo video
+
 Sometimes when you access [http://localhost:8501](http://localhost:8501), you might encounter a loading screen, as shown below:
 
 ![Loading Screen](https://github.com/rootcodelabs/rootcode-anonymizer/assets/51948729/d0c923be-3ae0-4056-9287-50f0a890fe8c)
