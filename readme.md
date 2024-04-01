@@ -51,9 +51,10 @@
      ```
      docker run -p 8501:8501 anonymizer-app
      ```
+   - You can visit http://localhost:8501 to access the application.
 
 4. **Stopping the Container:**
-   - To stop the container, use the following command:
+   - When you need to stop the container, use the following command:
      ```
      docker stop anonymizer-app
      ```
