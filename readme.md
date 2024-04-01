@@ -63,7 +63,7 @@ This pipeline provides an effective solution for anonymizing data. Enjoy anonymi
 
 ## Usage
 
-Please click on the [Link]([URL](https://drive.google.com/file/d/1bmcwFNvdijVV8VdOn3mKtIYt99_29-nc/view?usp=sharing)) to view anonymizer demo video
+Please [Click Here](https://drive.google.com/file/d/1bmcwFNvdijVV8VdOn3mKtIYt99_29-nc/view?usp=sharing) to view anonymizer demo video
 
 Sometimes when you access [http://localhost:8501](http://localhost:8501), you might encounter a loading screen, as shown below:
 
