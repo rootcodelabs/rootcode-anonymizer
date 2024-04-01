@@ -9,7 +9,7 @@
      ```
 
 2. **Setup the Base Model:**
-   - Before proceeding with the installation, please download the NER_basemodel.zip from [this link](#) and place it in the root directory of the cloned repository. Then, unzip the file. This zip file contains the model for Named Entity Recognition (NER). Note that without this base model, the anonymizer will not work.
+   - Before proceeding with the installation, please download the NER_basemodel.zip from [this link](https://drive.google.com/file/d/1v6Xvkr_t4G2mGC3bfKORXHhGciEUwptM/view?usp=sharing) and place it in the root directory of the cloned repository. Then, unzip the file. This zip file contains the model for Named Entity Recognition (NER). Note that without this base model, the anonymizer will not work.
 
 3. **Installation Methods:**
    - There are two ways to install:
