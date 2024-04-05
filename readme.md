@@ -30,7 +30,7 @@
 3. **Launch the Application:**
    - Launch the application using the following command:
      ```
-     streamlit run Anonymizer_application.py
+     streamlit run Anonimizer_application.py
      ```
    - In most cases, this will open a browser window directing you to the application. Alternatively, you can visit [http://localhost:8501](http://localhost:8501) to access the application.
 
