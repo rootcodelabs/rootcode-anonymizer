@@ -22,6 +22,8 @@ class NERProcessor:
 
     def replace_substring(self, original_string, start_index, end_index, entity):
         replacement = self.get_fake_entity(entity[-3:])
+        if replacement is None:
+            return original_string, 0
         adjusted_string = original_string[:start_index] + replacement + original_string[end_index:]
         adjustment = len(replacement) - (end_index - start_index)
         return adjusted_string, adjustment
