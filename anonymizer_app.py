@@ -25,6 +25,7 @@ def progress_bar_handler(progress_bar, progress, progress_text):
 
 def downloaded():
     global downloaded_time
+    st.success("CSV file downloaded successfully!")
     downloaded_time = int(time.time())
     return True
 
@@ -74,8 +75,6 @@ def main():
                     mime='text/csv',
                     on_click=downloaded
                 )
-                
-                st.success("CSV file downloaded successfully!")
 
 if __name__ == "__main__":
     main()
