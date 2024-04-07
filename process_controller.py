@@ -55,5 +55,5 @@ class NERProcessorController:
                 modified_row.append(final_output)
                 print(modified_row)
             modified_sentence_rows_list.append(modified_row)
-        anonymizer_app.progress_bar_handler(progress_bar, 100, "Done")
+        anonymizer_app.progress_bar_handler(progress_bar, 100, "Anonymization Completed...")
         return modified_sentence_rows_list
