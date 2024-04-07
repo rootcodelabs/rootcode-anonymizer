@@ -30,20 +30,24 @@ class NERProcessor:
 
     def ner_with_word_and_most_frequent_entity(self, sentence):
         ner_results = self.classifier(sentence)
-
+        
         word_results = []
         current_word = {"word": "", "start": None, "end": None, "entities": []}
         for token_result in ner_results:
-            if token_result['word'].startswith('▁'):  
-                if current_word['word']:  
-                    entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
-                    most_frequent_entity = entity_counter.most_common(1)[0][0]
-                    word_results.append({"word": current_word['word'], "entity": most_frequent_entity, "start": current_word['start'], "end": current_word['end']})
-                current_word = {"word": token_result['word'][1:], "start": token_result['start'], "end": token_result['end'], "entities": [token_result]}
+            if token_result['entity']!='I-MISC':
+                if token_result['word'].startswith('▁'):  
+                    if current_word['word']:  
+                        entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
+                        most_frequent_entity = entity_counter.most_common(1)[0][0]
+                        word_results.append({"word": current_word['word'], "entity": most_frequent_entity, "start": current_word['start'], "end": current_word['end']})
+                    current_word = {"word": token_result['word'][1:], "start": token_result['start'], "end": token_result['end'], "entities": [token_result]}
+                else:
+                    current_word['word'] += token_result['word']
+                    current_word['end'] = token_result['end']
+                    current_word['entities'].append(token_result)
             else:
-                current_word['word'] += token_result['word']
-                current_word['end'] = token_result['end']
-                current_word['entities'].append(token_result)
+                ner_results.remove(token_result)
+
 
         if current_word['word']:
             entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])

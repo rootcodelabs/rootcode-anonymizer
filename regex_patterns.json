@@ -6,7 +6,7 @@
         },
         {
             "pattern": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b",
-            "replacement": "abc@example.com"
+            "replacement": "Test_user@example.com"
         }
     ]
 }

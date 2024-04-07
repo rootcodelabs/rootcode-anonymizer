@@ -5,3 +5,6 @@ __pycache__/
 # Ignore system-generated files
 .DS_Store
 Thumbs.db
+
+NER_basemodel/
+NER_basemodel.zip
