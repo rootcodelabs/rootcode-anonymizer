@@ -64,9 +64,6 @@ class NERProcessorController:
                 formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
                 error_statement = f'Time : {formatted_datetime} | Data Row Number : {index} | Error : {e}'
                 error_log.append(error_statement)
-                print("****")
-                print(len(error_log))
-                print("****")
                 logging.error(error_statement)
 
         anonymizer_app.progress_bar_handler(progress_bar, 100, "Anonymization Completed...")
