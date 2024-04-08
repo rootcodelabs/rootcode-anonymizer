@@ -12,7 +12,7 @@ class NERProcessorController:
         self.ner_processor = NERProcessor()
         self.entity_grouper = EntityGrouper()
         self.regex_processor = RegexStringProcessor()
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.ERROR)
 
     def calculate_progress_increment(self, list_size):
         if list_size == 0:
