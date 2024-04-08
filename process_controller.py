@@ -12,7 +12,7 @@ class NERProcessorController:
         self.ner_processor = NERProcessor()
         self.entity_grouper = EntityGrouper()
         self.regex_processor = RegexStringProcessor()
-        logging.basicConfig(filename='anonymizer_log.log', level=logging.INFO)
+        logging.basicConfig(level=logging.INFO)
 
     def calculate_progress_increment(self, list_size):
         if list_size == 0:
