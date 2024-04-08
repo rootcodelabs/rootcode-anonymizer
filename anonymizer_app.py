@@ -3,6 +3,8 @@ import pandas as pd
 import csv
 import codecs
 import time
+import zipfile
+from io import BytesIO
 from process_controller import NERProcessorController
 
 class SessionState:
@@ -25,7 +27,7 @@ def progress_bar_handler(progress_bar, progress, progress_text):
 
 def downloaded():
     global downloaded_time
-    st.success("CSV file downloaded successfully!")
+    st.success("File downloaded successfully!")
     downloaded_time = int(time.time())
     return True
 
@@ -60,21 +62,47 @@ def main():
 
                 reader = csv.reader(preprocessed_content)
                 rows = [row for row in reader]
-                modified_rows = process_controller.process_sentence_list(rows, my_bar)
+                modified_rows, error_log = process_controller.process_sentence_list(rows, my_bar)
 
-                st.success("CSV file preprocessed and processed successfully!")
+                total_rows = len(rows)
+                successful_rows = total_rows - len(error_log)
+                error_rows = len(error_log)
 
-                df = pd.DataFrame(modified_rows)
+                if error_log:
+                    st.warning(f"CSV file preprocessed and processed with {error_rows} errors.")
+                    st.write(f"{successful_rows} rows successfully anonymized.")
+                    st.write(f"{error_rows} rows ignored due to errors.")
 
-                st.subheader("Download processed CSV file")
-                csv_file = df.to_csv(index=False).encode('windows-1252')
-                st.download_button(
-                    label="Download",
-                    data=csv_file,
-                    file_name='processed_data.csv',
-                    mime='text/csv',
-                    on_click=downloaded
-                )
+                    with open('error_log.txt', 'w') as f:
+                        f.write('\n'.join(error_log))
+
+                    zip_buffer = BytesIO()
+                    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+                        zip_file.write('error_log.txt')
+                        zip_file.writestr('processed_data.csv', pd.DataFrame(modified_rows).to_csv(index=False).encode('windows-1252'))
+
+                    zip_buffer.seek(0)
+
+                    st.download_button(
+                        label="Download Errors and Processed Data",
+                        data=zip_buffer,
+                        file_name='processed_data_and_errors.zip',
+                        mime='application/zip',
+                        on_click=downloaded
+                    )
+
+                else:
+                    st.success("CSV file preprocessed and processed successfully!")
+                    st.write(f"{successful_rows} rows successfully anonymized.")
+
+                    csv_file = pd.DataFrame(modified_rows).to_csv(index=False).encode('windows-1252')
+                    st.download_button(
+                        label="Download Processed Data",
+                        data=csv_file,
+                        file_name='processed_data.csv',
+                        mime='text/csv',
+                        on_click=downloaded
+                    )
 
 if __name__ == "__main__":
     main()
