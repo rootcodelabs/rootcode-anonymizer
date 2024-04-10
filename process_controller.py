@@ -67,6 +67,6 @@ class NERProcessorController:
                 error_log.append(error_statement)
                 logging.error(error_statement)
 
-        if progress_bar
+        if progress_bar:
             anonymizer_app.progress_bar_handler(progress_bar, 100, "Anonymization Completed...")
         return modified_sentence_rows_list, error_log
