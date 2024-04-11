@@ -31,7 +31,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     reader = csv.reader(content)
     rows = [row for row in reader]
-    modified_rows = process_controller.process_sentence_list(rows)
+    modified_rows = process_controller.process_sentence_list(rows, False)
 
     with tempfile.NamedTemporaryFile(delete=False, suffix='.csv', newline='', mode='w', encoding='windows-1252') as tmp_file:
         writer = csv.writer(tmp_file)
