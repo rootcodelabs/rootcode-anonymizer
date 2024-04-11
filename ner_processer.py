@@ -45,9 +45,6 @@ class NERProcessor:
                     current_word['word'] += token_result['word']
                     current_word['end'] = token_result['end']
                     current_word['entities'].append(token_result)
-            else:
-                ner_results.remove(token_result)
-
 
         if current_word['word']:
             entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
