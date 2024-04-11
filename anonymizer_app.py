@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
-import csv
-import codecs
 import time
 import zipfile
 from io import BytesIO
 from process_controller import NERProcessorController
+import openpyxl
+import codecs
+import math
 
 class SessionState:
     def __init__(self, **kwargs):
@@ -38,7 +39,7 @@ def main():
 
     session_state = SessionState(uploaded_file_name=None)
 
-    uploaded_file = st.file_uploader("Upload CSV file", type=['csv'])
+    uploaded_file = st.file_uploader("Upload Excel file", type=['xlsx'])
 
     if uploaded_file is not None:
         file_name = uploaded_file.name + "_" + str(int(time.time()))
@@ -50,18 +51,18 @@ def main():
             if session_state.uploaded_file_name != uploaded_file.name:
                 st.write("Uploaded file details:")
                 st.write(uploaded_file.name)
-                st.write("Preprocessing CSV file...")
+                st.write("Preprocessing Excel file...")
 
                 progress_text = "Operation in progress. Please wait."
                 my_bar = st.progress(0, text=progress_text)
 
-                content = uploaded_file.getvalue()
-                preprocessed_content = preprocess_bytes(content)
+                content = uploaded_file.read()
+                df = pd.read_excel(BytesIO(content), engine='openpyxl')
+
+                rows = [[y for y in x if pd.notna(y)] for x in df.values.tolist()]
+                rows = [df.columns.tolist()] + rows
 
                 process_controller = NERProcessorController()
-
-                reader = csv.reader(preprocessed_content)
-                rows = [row for row in reader]
                 modified_rows, error_log = process_controller.process_sentence_list(rows, my_bar)
 
                 total_rows = len(rows)
@@ -69,7 +70,7 @@ def main():
                 error_rows = len(error_log)
 
                 if error_log:
-                    st.warning(f"CSV file preprocessed and processed with {error_rows} errors.")
+                    st.warning(f"Excel file preprocessed and processed with {error_rows} errors.")
                     st.write(f"{successful_rows} rows successfully anonymized.")
                     st.write(f"{error_rows} rows ignored due to errors.")
 
@@ -79,7 +80,8 @@ def main():
                     zip_buffer = BytesIO()
                     with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
                         zip_file.write('error_log.txt')
-                        zip_file.writestr('processed_data.csv', pd.DataFrame(modified_rows).to_csv(index=False).encode('windows-1252'))
+                        excel_buffer = BytesIO()
+                        zip_file.writestr('processed_data.xlsx', pd.DataFrame(modified_rows).to_excel(excel_buffer, index=False, engine='openpyxl', header=None))
 
                     zip_buffer.seek(0)
 
@@ -92,15 +94,18 @@ def main():
                     )
 
                 else:
-                    st.success("CSV file preprocessed and processed successfully!")
+                    st.success("Excel file preprocessed and processed successfully!")
                     st.write(f"{successful_rows} rows successfully anonymized.")
 
-                    csv_file = pd.DataFrame(modified_rows).to_csv(index=False).encode('windows-1252')
+                    excel_buffer = BytesIO()
+                    pd.DataFrame(modified_rows).to_excel(excel_buffer, index=False, engine='openpyxl', header=None)
+                    excel_buffer.seek(0)
+
                     st.download_button(
                         label="Download Processed Data",
-                        data=csv_file,
-                        file_name='processed_data.csv',
-                        mime='text/csv',
+                        data=excel_buffer,
+                        file_name='processed_data.xlsx',
+                        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                         on_click=downloaded
                     )
 
