@@ -46,6 +46,7 @@ class NERProcessorController:
                     anonymizer_app.progress_bar_handler(progress_bar, int(count), progress_text)
                 modified_row = []
                 for sentence in row:
+                    sentence = str(sentence)
                     sentence  = self.regex_processor.apply_regex_substitution(sentence)
                     output = self.ner_processor.ner_with_word_and_most_frequent_entity(sentence)
                     grouped_entities = self.entity_grouper.group_words(output)
