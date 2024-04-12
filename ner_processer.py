@@ -34,7 +34,7 @@ class NERProcessor:
         word_results = []
         current_word = {"word": "", "start": None, "end": None, "entities": []}
         for token_result in ner_results:
-            if token_result['entity']!='I-MISC':
+            if token_result['entity']!='I-MISC' or token_result['entity']!='I-ORG':
                 if token_result['word'].startswith('▁'):  
                     if current_word['word']:  
                         entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
