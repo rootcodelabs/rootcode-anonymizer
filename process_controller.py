@@ -53,11 +53,12 @@ class NERProcessorController:
                     final_output = sentence
                     offset = 0
                     for entity in grouped_entities:
-                        if entity[0]['word'].lower() not in immutable_words:
-                            start_index = entity[0]['start'] + offset
-                            end_index = entity[-1]['end'] + offset
-                            final_output, adjustment = self.ner_processor.replace_substring(final_output, start_index, end_index, entity[0]['entity'])
-                            offset += adjustment
+                        if entity[0]['entity'] != 'I-MISC' and entity[0]['entity'] != 'I-ORG':
+                            if entity[0]['word'].lower() not in immutable_words:
+                                start_index = entity[0]['start'] + offset
+                                end_index = entity[-1]['end'] + offset
+                                final_output, adjustment = self.ner_processor.replace_substring(final_output, start_index, end_index, entity[0]['entity'])
+                                offset += adjustment
                     modified_row.append(final_output)
                     logging.info(modified_row)
                 modified_sentence_rows_list.append(modified_row)
