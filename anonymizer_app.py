@@ -58,9 +58,10 @@ def main():
 
                 content = uploaded_file.read()
                 df = pd.read_excel(BytesIO(content), engine='openpyxl')
+                df_filled = df.fillna('None')
 
-                rows = [[y for y in x if pd.notna(y)] for x in df.values.tolist()]
-                rows = [df.columns.tolist()] + rows
+
+                rows = [df.columns.tolist()] + df_filled.values.tolist()
 
                 process_controller = NERProcessorController()
                 modified_rows, error_log = process_controller.process_sentence_list(rows, my_bar)
