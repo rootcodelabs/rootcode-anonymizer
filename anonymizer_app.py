@@ -79,10 +79,12 @@ def main():
                         f.write('\n'.join(error_log))
 
                     zip_buffer = BytesIO()
+                    excel_buffer = BytesIO()
                     with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
                         zip_file.write('error_log.txt')
-                        excel_buffer = BytesIO()
-                        zip_file.writestr('processed_data.xlsx', pd.DataFrame(modified_rows).to_excel(excel_buffer, index=False, engine='openpyxl', header=None))
+                        pd.DataFrame(modified_rows).to_excel(excel_buffer, index=False, engine='openpyxl', header=None)
+                        excel_buffer.seek(0)
+                        zip_file.writestr('processed_data.xlsx', excel_buffer.read())
 
                     zip_buffer.seek(0)
 
