@@ -30,25 +30,43 @@ class NERProcessor:
 
     def ner_with_word_and_most_frequent_entity(self, sentence):
         ner_results = self.classifier(sentence)
-        
-        word_results = []
-        current_word = {"word": "", "start": None, "end": None, "entities": []}
-        for token_result in ner_results:
-            if token_result['entity']!='I-MISC' or token_result['entity']!='I-ORG':
-                if token_result['word'].startswith('▁'):  
-                    if current_word['word']:  
-                        entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
-                        most_frequent_entity = entity_counter.most_common(1)[0][0]
-                        word_results.append({"word": current_word['word'], "entity": most_frequent_entity, "start": current_word['start'], "end": current_word['end']})
-                    current_word = {"word": token_result['word'][1:], "start": token_result['start'], "end": token_result['end'], "entities": [token_result]}
-                else:
-                    current_word['word'] += token_result['word']
-                    current_word['end'] = token_result['end']
-                    current_word['entities'].append(token_result)
 
-        if current_word['word']:
-            entity_counter = Counter([entity_result['entity'] for entity_result in current_word['entities']])
-            most_frequent_entity = entity_counter.most_common(1)[0][0]
-            word_results.append({"word": current_word['word'], "entity": most_frequent_entity, "start": current_word['start'], "end": current_word['end']})
+        if ner_results != []:
+            ner_results_processed = []
+            ner_results_currant = []
+            for result in ner_results:
+                if ner_results_currant == []:
+                    ner_results_currant.append(result)
+                else:
+                    if result['start'] == ner_results_currant[-1]["end"]:
+                        ner_results_currant.append(result)
+                    else:
+                        ner_results_processed.append(ner_results_currant)
+                        ner_results_currant = [result]
+            ner_results_processed.append(ner_results_currant)
+
+            word_results = []
+
+            for entity_word in ner_results_processed:
+                current_word = {"word": None, "start": None, "end": None, "entity": None}
+                entity_count = Counter(token['entity'] for token in entity_word)
+                most_frequent_entity = entity_count.most_common(1)[0][0]
+                current_word["entity"] = most_frequent_entity
+                for token in entity_word:
+                    if current_word["word"] is None:
+                        if token['word'].startswith('▁'):
+                            current_word["word"] = token['word'][1:]
+                        else:
+                            current_word["word"] = token['word']
+                    else:
+                        current_word['word'] += token['word']
+                    if current_word["start"] is None or current_word["start"]>token['start']:
+                        current_word["start"] = token['start']
+                    if current_word["end"] is None or current_word["end"]<token['end']:
+                        current_word["end"] = token['end']
+                word_results.append(current_word)
+        else:
+            word_results = []
+        
 
         return word_results
