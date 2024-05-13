@@ -6,6 +6,7 @@ from regex_processor import RegexStringProcessor
 import json
 import anonymizer_app
 import datetime
+import pre_processor
 
 class NERProcessorController:
     def __init__(self):
@@ -47,6 +48,7 @@ class NERProcessorController:
                 modified_row = []
                 for sentence in row:
                     sentence = str(sentence)
+                    sentence = pre_processor.pre_processor(sentence)
                     sentence  = self.regex_processor.apply_regex_substitution(sentence)
                     output = self.ner_processor.ner_with_word_and_most_frequent_entity(sentence)
                     grouped_entities = self.entity_grouper.group_words(output)
