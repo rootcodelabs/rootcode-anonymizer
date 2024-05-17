@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 import json
-import re
+import regex  # Using the 'regex' module for Unicode properties
 
 class RegexStringProcessor:
     def __init__(self):
@@ -16,5 +15,5 @@ class RegexStringProcessor:
         for pattern_data in self.regex_patterns:
             pattern = pattern_data["pattern"]
             replacement = pattern_data["replacement"]
-            input_string = re.sub(pattern, replacement, input_string)
+            input_string = regex.sub(pattern, replacement, input_string)
         return input_string
