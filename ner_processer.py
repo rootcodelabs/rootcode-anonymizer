@@ -3,6 +3,7 @@ from transformers import AutoTokenizer, TFAutoModelForTokenClassification
 from transformers import pipeline
 from faker import Faker
 from collections import Counter
+import text_splitter
 
 class NERProcessor:
     def __init__(self):
@@ -29,7 +30,14 @@ class NERProcessor:
         return adjusted_string, adjustment
 
     def ner_with_word_and_most_frequent_entity(self, sentence):
-        ner_results = self.classifier(sentence)
+        if len(sentence)>2000:
+            splitted_text, number_chunks = text_splitter.primary_handler(sentence)
+            ner_results = []
+            for text in splitted_text:
+                ner_results.append(self.classifier(text))
+            ner_results = text_splitter.secondary_handler(ner_results, number_chunks)
+        else:
+            ner_results = self.classifier(sentence)
 
         if ner_results != []:
             ner_results_processed = []
